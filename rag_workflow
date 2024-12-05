@@ -1,0 +1,18 @@
+digraph {
+	rankdir=LR
+	node [fontname=Arial shape=box style=rounded]
+	Query [label=Query]
+	Embedding [label=Embedding]
+	VectorDB [label="Vector database"]
+	Context [label=Context]
+	Prompt [label=Prompt]
+	LLM [label=LLM]
+	Response [label=Response]
+	Query -> Embedding [label="①Retrieve"]
+	Embedding -> VectorDB
+	VectorDB -> Context
+	Query -> Prompt
+	Context -> Prompt
+	Prompt -> LLM [label="②Augment"]
+	LLM -> Response [label="③Generate"]
+}

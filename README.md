@@ -1,4 +1,4 @@
-# Hand on RAG
+# Rag practice form Zero
 
 ## 什么是RAG？
 
