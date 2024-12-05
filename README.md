@@ -10,7 +10,7 @@ RAG 通过在语言模型生成答案之前，先从广泛的文档数据库中�
 
 此仓库用于学习大模型RAG的相关内容，目前为手搓实现，主要是llama-index和langchain不太好魔改。此仓库可以方便看论文的时候，实现一些小的实验。以下为本仓库的RAG整体框架图。
 
-![alt text](images/Retrieval-Augmented%20Generation（RAG-Learning）.png)
+![alt text](images/Rag_strucutre.png)
 
 以下为笔者所构思的RAG实现过程，这里面主要包括包括三个基本步骤：
 
@@ -21,7 +21,7 @@ RAG 通过在语言模型生成答案之前，先从广泛的文档数据库中�
 3. 生成 — 以检索到的上下文为条件，生成问题的回答。
 
 <div align="center">
-    <img src="images/RAG.png" alt="RAG" width="100%">
+    <img src="images/RAG_workflow.png" alt="RAG" width="100%">
 </div>
 
 # QuickStrat
