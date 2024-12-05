@@ -4,8 +4,6 @@
 
 RAG（Retrieval-Augmented Generation、検索拡張生成）は、検索エンジンや情報検索技術を統合した生成型AIの一種です。大規模言語モデル（LLM）と外部知識ベースを組み合わせて、質問に対するより正確で最新の回答を生成する仕組みを提供します。以下に、RAGの基本的な概念を説明します：
 
-![alt text](images/Rag_strucutre.png)
-
 RAGの仕組み
 
 RAGは主に以下の3つのステップで構成されます：
@@ -19,18 +17,33 @@ RAGは主に以下の3つのステップで構成されます：
 	•	言語モデル（例：GPT、BERTなど）が検索データを利用して最終的な回答を生成します。
 	•	外部データベースから得た情報を活用することで、モデルが学習していない新しい情報を含めた回答が可能になります。
 
+
+RAGの流れ
+
 <div align="left">
-    <img src="images/RAG_workflow.png" alt="RAG" width="50%">
+    <img src="images/RAG_workflow.png" alt="RAG" width="70%">
 </div>
 Image from https://blog-ja.allganize.ai/allganize_rag-1/
 
+
+この実践例のRAG構造
+
+![alt text](images/Rag_strucutre.png)
+
+
+
 # Prepare
 
-安装依赖，需要 Python 3.10 以上版本。
+1. 安装依赖，需要 Python 3.10 以上版本。
 
 ```bash
 pip install -r requirements.txt
 ```
+
+2. ZHIPUAI API申請
+ZHUPUAIのAPIを利用するには、公式サイトでアカウントを登録し、APIキーを取得する必要があります。新規登録後、無料のトークンが提供され、実名認証を完了すると追加のトークンが付与されます
+https://bigmodel.cn/
+
 
 导入所使用的包
 
