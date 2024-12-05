@@ -18,10 +18,11 @@ RAGは主に以下の3つのステップで構成されます：
 	3.	Generate（生成）:
 	•	言語モデル（例：GPT、BERTなど）が検索データを利用して最終的な回答を生成します。
 	•	外部データベースから得た情報を活用することで、モデルが学習していない新しい情報を含めた回答が可能になります。
-    
+
 <div align="left">
     <img src="images/RAG_workflow.png" alt="RAG" width="50%">
 </div>
+Image from https://blog-ja.allganize.ai/allganize_rag-1/
 
 # Prepare
 
