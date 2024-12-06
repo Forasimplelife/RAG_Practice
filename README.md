@@ -3,7 +3,9 @@
 ## RAGとは？
 
 ```
-RAG（Retrieval-Augmented Generation、検索拡張生成）は、検索エンジンや情報検索技術を統合した生成型AIの一種です。大規模言語モデル（LLM）と外部知識ベースを組み合わせて、質問に対するより正確で最新の回答を生成する仕組みを提供します。以下に、RAGの基本的な概念を説明します：
+RAG（Retrieval-Augmented Generation、検索拡張生成）は、検索エンジンや情報検索技術を統合した生成型AIの一種です。
+大規模言語モデル（LLM）と外部知識ベースを組み合わせて、質問に対するより正確で最新の回答を生成する仕組みを提供します。
+以下に、RAGの基本的な概念を説明します：
 ```
 
 ### RAGの仕組み
@@ -39,13 +41,13 @@ Image from https://blog-ja.allganize.ai/allganize_rag-1/
 
 ## Prepare
 
-### 必要なパッケージをインストールする Python 3.10 以上に必要です。
+### 1.必要なパッケージをインストールする Python 3.10 以上に必要です。
 
 ```bash
 pip install -r requirements.txt
 ```
 
-###  ZHIPUAI API申請
+###  2.ZHIPUAI API申請
 
 ```
 ZHUPUAIのAPIを利用するには、公式サイトでアカウントを登録し、APIキーを取得する必要があります。
@@ -55,7 +57,7 @@ ZHUPUAI 公式サイト：　https://bigmodel.cn/
 APIのコードを発行しましたら、.envドキュメントの中に　ZHIPUAI_API_KEY='your API key'、your API keyの置換します。
 ```
 
-###  自分のデータ準備して、data/を置きます
+###  3.自分のデータ準備して、data/を置きます
 
 <div align="left">
     <img src="images/Document.png" alt="RAG" width="70%">
@@ -64,7 +66,7 @@ APIのコードを発行しましたら、.envドキュメントの中に　ZHIP
 
 ## Run
 
-### 必要なパッケージを導入
+### 1.必要なパッケージを導入
 
 ```python
 from RAG.VectorBase import VectorStore
@@ -72,7 +74,7 @@ from RAG.utils import ReadFiles
 from RAG.LLM import OpenAIChat
 ```
 
-### ベクター作成プロセス
+### 2.ベクター作成プロセス
 
 ```
 # ドキュメントを読み込んで分割します
@@ -91,7 +93,7 @@ vector.get_vector(EmbeddingModel=embedding)
 vector.persist(path='storage')
 ```
 
-### LLMコール
+### 3. LLMコール ZhipuAIChatを使います。
 
 ```
 # ベクターストアを再初期化します
@@ -116,6 +118,13 @@ chat = ZhipuAIChat(model='chatglm_lite')
 print(chat.chat(question, [], content))
 ```
 
+### 4. 結果
+```
+アジレント自動化ソリューションは、BravoNGS自動化システムやAgilent VWorks Automation Controlソフトウェアを通じて、
+NGSライブラリ調整を自動化するための製品とサービスを提供しています。これにより、手間と時間のかかるNGSライブラリ調整を効率化し、
+一元化されたサポートを実現しています。
+
+```
 
 ## 実装の詳細
 
