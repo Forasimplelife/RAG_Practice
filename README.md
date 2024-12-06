@@ -40,7 +40,6 @@ Image from https://blog-ja.allganize.ai/allganize_rag-1/
 ![alt text](images/Rag_strucutre.png)
 
 
-
 # Prepare
 
 1. 必要なパッケージをインストールする Python 3.10 以上に必要です。
@@ -56,16 +55,19 @@ ZHUPUAIのAPIを利用するには、公式サイトでアカウントを登録�
 
 https://bigmodel.cn/
 
+APIのコードを発行しましたら、.envドキュメントの中に　ZHIPUAI_API_KEY='your API key'、your API keyの置換します。
+
+
 ３. 自分のデータ準備して、data/を置きます
 
 <div align="left">
-    <img src="images/RAG_workflow.png" alt="RAG" width="70%">
+    <img src="images/Document.png" alt="RAG" width="70%">
 </div>
 
-4 
 
+# Run
 
-4.　导入所使用的包
+１.　必要なパッケージを導入
 
 ```python
 from RAG.VectorBase import VectorStore
@@ -73,51 +75,59 @@ from RAG.utils import ReadFiles
 from RAG.LLM import OpenAIChat
 ```
 
-如果没有数据库那就按照如下代码：
+2. ベクター作成プロセス
 
-> 可以使用`VectorStore.persist()`保存到向量数据库。
+```
+# ドキュメントを読み込んで分割します
+docs = ReadFiles('./data').get_content(max_token_len=600, cover_content=150)
 
-```python
-# 没有保存数据库
-docs = ReadFiles('./data').get_content(max_token_len=600, cover_content=150) # 获得data目录下的所有文件内容并分割
-embedding = JinaEmbedding("your model path") # 创建EmbeddingModel
+# ベクターストアを初期化します
 vector = VectorStore(docs)
+
+# 埋め込みモデルを作成します
+embedding = ZhipuEmbedding()
+
+# 各ドキュメントをベクトル化します
 vector.get_vector(EmbeddingModel=embedding)
-vector.persist(path='storage') # 将向量和文档内容保存到storage目录下，下次再用就可以直接加载本地的数据库
 
-question = 'git的分支原理？'
-
-content = vector.query(question, EmbeddingModel=embedding, k=1)[0]
-chat = OpenAIChat(model='gpt-3.5-turbo-1106')
-print(chat.chat(question, [], content))
+# ベクトルとドキュメントをローカルストレージに保存します
+vector.persist(path='storage')
 ```
 
-如果有数据库那就按照如下代码：
+# LLMコール
 
-```python
+```
+# ベクターストアを再初期化します
 vector = VectorStore()
 
-vector.load_vector('./storage') # 加载本地的数据库
+#ローカルに保存されたデータを読み込みます
+vector.load_vector('./storage')
 
-embedding = JinaEmbedding("your model path")
+# 埋め込みモデルを再初期化します
+embedding = ZhipuEmbedding()
 
-question = 'git的分支原理？'
+# 質問内容を設定します
+question = 'アジレント自動化ソリューションは？'
 
+# ベクターストアを使って最も関連性の高い文書を取得します
 content = vector.query(question, EmbeddingModel=embedding, k=1)[0]
 
-chat = OpenAIChat(model='gpt-3.5-turbo-1106')
+# LLM モデルを初期化します
+chat = ZhipuAIChat(model='chatglm_lite')
+
+# 質問に基づく回答を生成します
 print(chat.chat(question, [], content))
 ```
 
-> 如果大家的文档有中文的话，不建议使用`openai`的向量接口，可以使用智谱AI或者Jina的向量模型或接口
 
-# 实现细节
+# 実装の詳細
 
-## 向量化
+## ベクトル化
 
-在这一部分共使用了三种向量化的方法，分别是`zhipu`、`jina`和`openai`。大家可以在`Embedding`文中找到实现的方式。
+この部分では、`zhipu`、`jina`、および `openai` の3つのベクトル化手法を使用しています。具体的な実装方法については、`Embedding` モジュール内で確認できます。
 
-如果你有兴趣想使用其他的向量模型可以继承`BaseEmbeddings`类，然后实现`get_embedding`方法。
+他のベクトルモデルを使用したい場合は、`BaseEmbeddings` クラスを継承し、`get_embedding` メソッドを実装してください。
+
 
 ```python
 class BaseEmbeddings:
@@ -143,11 +153,11 @@ class BaseEmbeddings:
         return dot_product / magnitude
 ```
 
-## 向量检索
+## ベクトル検索
 
-这里未使用任何成熟的数据库，只是简单的使用`Json`保存了文档分割后的片段和对应的向量。大家可以在`VectorBase`中找到实现的方式。
+ここでは成熟したデータベースを使用せず、文書を分割した断片と対応するベクトルを単純に Json に保存しています。実装方法は VectorBase モジュール内で確認できます。
 
-在向量检索的时候仅使用`Numpy`进行加速，代码非常容易理解和修改。
+ベクトル検索では、Numpy のみを使用して高速化しています。コードは非常に理解しやすく、変更も容易です。
 
 ```python
 def query(self, query: str, EmbeddingModel: BaseEmbeddings, k: int = 1) -> List[str]:
@@ -157,11 +167,11 @@ def query(self, query: str, EmbeddingModel: BaseEmbeddings, k: int = 1) -> List[
     return np.array(self.document)[result.argsort()[-k:][::-1]]
 ```
 
-> 没有考虑生产环境使用，仅供学习使用
+> 本実装は生産環境での利用を考慮しておらず、学習目的のみに使用してください。
 
 ## LLM 模型
 
-这里支持了`openai`模型和`InternLM2`模型，如果想要用其他的模型，大家可以在`LLM`中找到实现的方式。继承以下基类，然后在此基础上进行修改即可。
+ここでは openai モデル、InternLM2 モデルと　ZHIPUAIモデル をサポートしています。他のモデルを使用したい場合は、LLM モジュール内の以下の基底クラスを継承し、必要に応じて改良してください。
 
 ```python
 class BaseModel:
@@ -176,7 +186,7 @@ class BaseModel:
 ```
 
 
-# 参考文献
+# Reference
 
 | Name                                                         | Paper Link                                |
 | ------------------------------------------------------------ | ----------------------------------------- |
