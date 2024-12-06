@@ -8,21 +8,15 @@ RAGの仕組み
 
 RAGは主に以下の3つのステップで構成されます：
 1.	Retrieve（検索）:
-	 
      ユーザーの質問（Query）を基に、知識ベースや外部データベース（例：ドキュメント、Webデータなど）から関連情報を検索します。
-
 	例えば、ベクトルデータベースを使用して質問に関連する情報を高速で取得します。
 
 2.	Augment（補完・拡張）:
-
 	•  検索結果をもとにコンテキスト情報を生成します。
-
 	• 検索したデータをプロンプトとして言語モデルに渡すことで、回答生成に必要な情報を補完します。
 
 3.	Generate（生成）:
-
 	• 言語モデル（例：GPT、BERTなど）が検索データを利用して最終的な回答を生成します。
-    
 	• 外部データベースから得た情報を活用することで、モデルが学習していない新しい情報を含めた回答が可能になります。
 
 
@@ -40,15 +34,15 @@ Image from https://blog-ja.allganize.ai/allganize_rag-1/
 ![alt text](images/Rag_strucutre.png)
 
 
-# Prepare
+## Prepare
 
-1. 必要なパッケージをインストールする Python 3.10 以上に必要です。
+### 必要なパッケージをインストールする Python 3.10 以上に必要です。
 
 ```bash
 pip install -r requirements.txt
 ```
 
-2. ZHIPUAI API申請
+###  ZHIPUAI API申請
 
 ZHUPUAIのAPIを利用するには、公式サイトでアカウントを登録し、APIキーを取得する必要があります。
 新規登録後、無料のトークンが提供され、実名認証を完了すると追加のトークンが付与されます
@@ -58,16 +52,16 @@ https://bigmodel.cn/
 APIのコードを発行しましたら、.envドキュメントの中に　ZHIPUAI_API_KEY='your API key'、your API keyの置換します。
 
 
-３. 自分のデータ準備して、data/を置きます
+###  自分のデータ準備して、data/を置きます
 
 <div align="left">
     <img src="images/Document.png" alt="RAG" width="70%">
 </div>
 
 
-# Run
+## Run
 
-１.　必要なパッケージを導入
+### 必要なパッケージを導入
 
 ```python
 from RAG.VectorBase import VectorStore
@@ -75,7 +69,7 @@ from RAG.utils import ReadFiles
 from RAG.LLM import OpenAIChat
 ```
 
-2. ベクター作成プロセス
+### ベクター作成プロセス
 
 ```
 # ドキュメントを読み込んで分割します
@@ -94,7 +88,7 @@ vector.get_vector(EmbeddingModel=embedding)
 vector.persist(path='storage')
 ```
 
-# LLMコール
+### LLMコール
 
 ```
 # ベクターストアを再初期化します
@@ -120,9 +114,9 @@ print(chat.chat(question, [], content))
 ```
 
 
-# 実装の詳細
+## 実装の詳細
 
-## ベクトル化
+### ベクトル化
 
 この部分では、`zhipu`、`jina`、および `openai` の3つのベクトル化手法を使用しています。具体的な実装方法については、`Embedding` モジュール内で確認できます。
 
@@ -153,7 +147,7 @@ class BaseEmbeddings:
         return dot_product / magnitude
 ```
 
-## ベクトル検索
+### ベクトル検索
 
 ここでは成熟したデータベースを使用せず、文書を分割した断片と対応するベクトルを単純に Json に保存しています。実装方法は VectorBase モジュール内で確認できます。
 
@@ -169,7 +163,7 @@ def query(self, query: str, EmbeddingModel: BaseEmbeddings, k: int = 1) -> List[
 
 > 本実装は生産環境での利用を考慮しておらず、学習目的のみに使用してください。
 
-## LLM 模型
+### LLM 模型
 
 ここでは openai モデル、InternLM2 モデルと　ZHIPUAIモデル をサポートしています。他のモデルを使用したい場合は、LLM モジュール内の以下の基底クラスを継承し、必要に応じて改良してください。
 
@@ -186,7 +180,7 @@ class BaseModel:
 ```
 
 
-# Reference
+## Reference
 
 | Name                                                         | Paper Link                                |
 | ------------------------------------------------------------ | ----------------------------------------- |
