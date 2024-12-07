@@ -1,5 +1,4 @@
-# Build a local manual QA system by using RAG 
-# RAGを利用してローカルマニュアルのQAシステムを構築する
+# Build a local manual QA system by using RAG (RAGを利用してローカルマニュアルのQAシステムを構築する)
 
 ## RAGとは？
 
