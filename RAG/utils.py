@@ -1,12 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-'''
-@File    :   utils.py
-@Time    :   2024/02/11 09:52:26
-@Author  :   不要葱姜蒜
-@Version :   1.0
-@Desc    :   None
-'''
 
 import os
 from typing import Dict, List, Optional, Tuple, Union
@@ -30,14 +23,10 @@ class ReadFiles:
         self.file_list = self.get_files()
 
     def get_files(self):
-        # args：dir_path，目标文件夹路径
         file_list = []
         for filepath, dirnames, filenames in os.walk(self._path):
-            # os.walk 函数将递归遍历指定文件夹
             for filename in filenames:
-                # 通过后缀名判断文件类型是否满足要求
                 if filename.endswith(".md"):
-                    # 如果满足要求，将其绝对路径加入到结果列表
                     file_list.append(os.path.join(filepath, filename))
                 elif filename.endswith(".txt"):
                     file_list.append(os.path.join(filepath, filename))
@@ -47,7 +36,6 @@ class ReadFiles:
 
     def get_content(self, max_token_len: int = 600, cover_content: int = 150):
         docs = []
-        # 读取文件内容
         for file in self.file_list:
             content = self.read_file_content(file)
             chunk_content = self.get_chunk(
@@ -62,7 +50,7 @@ class ReadFiles:
         curr_len = 0
         curr_chunk = ''
 
-        lines = text.split('\n')  # 假设以换行符分割文本为行
+        lines = text.split('\n') 
 
         for line in lines:
             line = line.replace(' ', '')
@@ -86,7 +74,6 @@ class ReadFiles:
 
     @classmethod
     def read_file_content(cls, file_path: str):
-        # 根据文件扩展名选择读取方法
         if file_path.endswith('.pdf'):
             return cls.read_pdf(file_path)
         elif file_path.endswith('.md'):
@@ -98,7 +85,6 @@ class ReadFiles:
 
     @classmethod
     def read_pdf(cls, file_path: str):
-        # 读取PDF文件
         with open(file_path, 'rb') as file:
             reader = PyPDF2.PdfReader(file)
             text = ""
@@ -108,7 +94,6 @@ class ReadFiles:
 
     @classmethod
     def read_markdown(cls, file_path: str):
-        # 读取Markdown文件
         with open(file_path, 'r', encoding='utf-8') as file:
             md_text = file.read()
             html_text = markdown.markdown(md_text)
@@ -127,7 +112,7 @@ class ReadFiles:
 
 class Documents:
     """
-        获取已分好类的json格式文档
+        read the categorized JSON format document
     """
     def __init__(self, path: str = '') -> None:
         self.path = path

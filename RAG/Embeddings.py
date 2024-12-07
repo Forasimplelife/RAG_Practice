@@ -1,12 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-'''
-@File    :   Embeddings.py
-@Time    :   2024/02/10 21:55:39
-@Author  :   不要葱姜蒜
-@Version :   1.0
-@Desc    :   None
-'''
 
 import os
 from copy import copy

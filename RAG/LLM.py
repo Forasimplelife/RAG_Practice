@@ -1,33 +1,27 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-'''
-@File    :   LLM.py
-@Time    :   2024/02/12 13:50:47
-@Author  :   不要葱姜蒜
-@Version :   1.0
-@Desc    :   None
-'''
+
+
 from typing import Dict, List, Optional, Tuple, Union
 
 PROMPT_TEMPLATE = dict(
-    RAG_PROMPT_TEMPALTE="""使用以上下文来回答用户的问题。如果你不知道答案，就说你不知道。总是使用中文回答。
-        问题: {question}
-        可参考的上下文：
+    RAG_PROMPT_TEMPALTE="""以下のコンテキストを使用して、ユーザーの質問に答えてください。答えがわからない場合は、「わかりません」と答えてください。常に日本語で回答してください。
+        質問: {question}
+        参考可能なコンテキスト：
         ···
         {context}
         ···
-        如果给定的上下文无法让你做出回答，请回答数据库中没有这个内容，你不知道。
-        有用的回答:""",
-    InternLM_PROMPT_TEMPALTE="""先对上下文进行内容总结,再使用上下文来回答用户的问题。如果你不知道答案，就说你不知道。总是使用中文回答。
-        问题: {question}
-        可参考的上下文：
+        与えられたコンテキストで回答できない場合は、「データベースにこの内容は存在しないため、わかりません」と回答してください。
+        有用な回答:""",
+    InternLM_PROMPT_TEMPALTE="""最初にコンテキストを要約し、その後コンテキストを使用してユーザーの質問に答えてください。答えがわからない場合は、「わかりません」と答えてください。常に日本語で回答してください。
+        質問: {question}
+        参考可能なコンテキスト：
         ···
         {context}
         ···
-        如果给定的上下文无法让你做出回答，请回答数据库中没有这个内容，你不知道。
-        有用的回答:"""
+        与えられたコンテキストで回答できない場合は、「データベースにこの内容は存在しないため、わかりません」と回答してください。
+        有用な回答:"""
 )
-
 
 class BaseModel:
     def __init__(self, path: str = '') -> None:
@@ -101,14 +95,14 @@ class ZhipuAIChat(BaseModel):
             return response.choices[0].message.content
         except AttributeError as e:
             print(f"Attribute Error in ZhipuAI: {e}")
-            return "ZHIPUAI API 响应解析失败，请检查 API 文档。"
+            return "ZHIPUAI API のレスポンス解析に失敗しました。APIを確認してください。"
         except Exception as e:
             print(f"ZhipuAI Error: {e}")
-            return "调用 ZHIPUAI API 失败，请检查配置。"
+            return "ZHIPUAI API の呼び出しに失敗しました。設定を確認してください。"
 
     def get_api_key(self) -> str:
         import os
         api_key = os.getenv("ZHIPUAI_API_KEY")
         if not api_key:
-            raise ValueError("ZHIPU_API_KEY 未设置。请确保已在环境变量中配置。")
+            raise ValueError("ZHIPU_API_KEY が設定されていません。環境変数に正しく設定されていることを確認してください")
         return api_key
