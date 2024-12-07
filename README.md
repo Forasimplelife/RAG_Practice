@@ -1,4 +1,4 @@
-# Easy Rag
+# Easy_Rag
 
 ## RAGとは？
 
