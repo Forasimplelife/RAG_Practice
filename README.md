@@ -1,4 +1,4 @@
-# Build a local manual QA system by using RAG (RAGを利用してローカルマニュアルのQAシステムを構築する)
+# RAG技術を利用してローカルマニュアルのQAシステムを構築する
 
 
 ## Summary
@@ -15,7 +15,7 @@
 </div>
 
 
-## RAGとは？
+## 1. RAGについて
 
 <div style="max-width: 600px; word-wrap: break-word;">
 
@@ -24,7 +24,7 @@ RAG（Retrieval-Augmented Generation、検索拡張生成）は、検索エン�
 </div>
 
 
-### RAGの仕組み
+### 1.1 RAGの仕組み
 
 <div style="max-width: 600px; word-wrap: break-word;">
 
@@ -42,7 +42,7 @@ RAGは主に以下の3つのステップで構成されます：
 
 </div>
 
-### RAGの流れ
+### 1.2 RAGの流れ
 
 <div align="left">
     <img src="images/RAG_workflow.png" alt="RAG" width="70%">
@@ -51,39 +51,38 @@ Image from https://blog-ja.allganize.ai/allganize_rag-1/
 
 
 
-### この実践例のRAG構造
+### 1.3 この実践例のRAG構造
 
 ![alt text](images/Rag_strucutre.png)
 
 
-## Prepare
+## 2. Prepare
 
-### 1.必要なパッケージをインストールする Python 3.10 以上に必要です。
+### 2.1 必要なパッケージをインストールする Python 3.10 以上に必要です。
 
 ```bash
 pip install -r requirements.txt
 ```
 
-###  2.ZHIPUAI API申請
+###  2.2 ZHIPUAI API申請
 
-```
-ZHUPUAIのAPIを利用するには、公式サイトでアカウントを登録し、APIキーを取得する必要があります。
-新規登録後、無料のトークンが提供され、実名認証を完了すると追加のトークンが付与されます
-ZHUPUAI 公式サイト：　https://bigmodel.cn/
+<div style="max-width: 600px; word-wrap: break-word;">
 
+ZHUPUAIのAPIを利用するには、公式サイトでアカウントを登録し、APIキーを取得する必要があります。新規登録後、無料のトークンが提供され、実名認証を完了すると追加のトークンが付与されます ZHUPUAI 公式サイト：　https://bigmodel.cn/
 APIのコードを発行しましたら、.envドキュメントの中に　ZHIPUAI_API_KEY='your API key'、your API keyの置換します。
-```
 
-###  3.自分のデータ準備して、data/を置きます
+</div>
+
+###  2.3 自分のデータ準備して、data/を置きます
 
 <div align="left">
     <img src="images/Document.png" alt="RAG" width="70%">
 </div>
 
 
-## Run
+## 3 実行
 
-### 1.必要なパッケージを導入
+### 3.1 必要なパッケージをimport
 
 ```python
 from RAG.VectorBase import VectorStore
@@ -136,12 +135,13 @@ print(chat.chat(question, [], content))
 ```
 
 ### 4. 結果
-```
-アジレント自動化ソリューションは、BravoNGS自動化システムやAgilent VWorks Automation Controlソフトウェアを通じて、
-NGSライブラリ調整を自動化するための製品とサービスを提供しています。これにより、手間と時間のかかるNGSライブラリ調整を効率化し、
-一元化されたサポートを実現しています。
 
-```
+<div style="max-width: 600px; word-wrap: break-word;">
+
+アジレント自動化ソリューションは、BravoNGS自動化システムやAgilent VWorks Automation Controlソフトウェアを通じて、NGSライブラリ調整を自動化するための製品とサービスを提供しています。これにより、手間と時間のかかるNGSライブラリ調整を効率化し、一元化されたサポートを実現しています。
+
+</div>
+
 
 ## 実装の詳細
 
