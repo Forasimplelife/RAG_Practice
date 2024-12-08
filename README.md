@@ -132,7 +132,7 @@ vector.load_vector('./storage')
 embedding = ZhipuEmbedding()
 
 # 質問内容を設定します　(例)
-question = 'マルチチャンネル自動分注機（96 / 384ヘッド）の精度は？'
+question = 'マルチチャンネル自動分注機（96 / 384ヘッド）の精度は何ですか'
 
 # ベクターストアを使って最も関連性の高い文書を取得します
 content = vector.query(question, EmbeddingModel=embedding, k=1)[0]
