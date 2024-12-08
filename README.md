@@ -5,12 +5,20 @@
 
 <div style="max-width: 600px; word-wrap: break-word;">
 
-本プロジェクトでは、ローカルの取扱説明書を使用してQAシステムを構築しました。このシステムは、ユーザーが説明書に基づいて質問を入力すると、RAG技術を活用して関連情報を検索し、適切な回答を生成します。
+本プロジェクトでは、ZhipuAI が提供する ChatGLM モデル（無料でAPIを使用可能です） を使用して、ローカルの取扱説明書を基にしたQAシステムを構築しました。このシステムは、ユーザーが説明書に基づいて質問を入力すると、RAG技術を活用して関連情報を検索し、適切な回答を生成します。
+
+さらに、本プロジェクトでは、
 
 例えば、以下のような質問と回答が生成されます：
 
-**質問**: アジレント自動化ソリューションは？  
-**回答**: アジレント自動化ソリューションは、BravoNGS自動化システムやAgilent VWorks Automation Controlソフトウェアを通じて、NGSライブラリ調整を自動化するための製品とサービスを提供しています。これにより、手間と時間のかかるNGSライブラリ調整を効率化し、一元化されたサポートを実現しています。
+**質問1**: マイクロプレート用スタッカーシステムのプレート搬送時間は
+**回答1**: マイクロプレート用スタッカーシステムのプレート搬送時間はおよそ8秒です。これは「コンパクト設計プレート搬送時間およそ8秒の高速ロボット2、4、6本スタッカーの3タイプモデル」と記載されています。
+
+**質問2**: ロボット対応サーマルシール方式マイクロプレートシーラーは一枚プレートは何秒をかかりますか
+**回答2**: 1枚あたり8秒の高速シーリングを行います。
+
+**質問3**: マルチチャンネル自動分注機（96 / 384ヘッド）の精度は
+**回答3**: マルチチャンネル自動分注機（96 / 384ヘッド）の精度は、0.3–250µLの範囲でCVが5%以下の高精度分注が可能です。
 
 </div>
 
@@ -68,15 +76,19 @@ pip install -r requirements.txt
 
 <div style="max-width: 600px; word-wrap: break-word;">
 
-ZHUPUAIのAPIを利用するには、公式サイトでアカウントを登録し、APIキーを取得する必要があります。新規登録後、無料のトークンが提供され、実名認証を完了すると追加のトークンが付与されます ZHUPUAI 公式サイト：　https://bigmodel.cn/
+ZHUPUAIのAPIを利用するには、公式サイトでアカウントを登録し、APIキーを取得する必要があります。新規登録後、無料のトークンが提供され、実名認証を完了すると追加のトークンが付与されます。
 APIのコードを発行しましたら、.envドキュメントの中に　ZHIPUAI_API_KEY='your API key'、your API keyの置換します。
+
+<div align="left">
+    <img src="images/ZHIPUAI.png" alt="RAG" width="70%">
+</div>
 
 </div>
 
 ###  2.3 自分のデータ準備して、data/を置きます
 
 <div align="left">
-    <img src="images/Document.png" alt="RAG" width="70%">
+    <img src="images/Localdata.png" alt="RAG" width="70%">
 </div>
 
 
@@ -121,8 +133,8 @@ vector.load_vector('./storage')
 # 埋め込みモデルを再初期化します
 embedding = ZhipuEmbedding()
 
-# 質問内容を設定します
-question = 'アジレント自動化ソリューションは？'
+# 質問内容を設定します　(例)
+question = 'マルチチャンネル自動分注機（96 / 384ヘッド）の精度は？'
 
 # ベクターストアを使って最も関連性の高い文書を取得します
 content = vector.query(question, EmbeddingModel=embedding, k=1)[0]
@@ -134,11 +146,11 @@ chat = ZhipuAIChat(model='chatglm_lite')
 print(chat.chat(question, [], content))
 ```
 
-### 4. 結果
+### 4. 結果(例)
 
 <div style="max-width: 600px; word-wrap: break-word;">
 
-アジレント自動化ソリューションは、BravoNGS自動化システムやAgilent VWorks Automation Controlソフトウェアを通じて、NGSライブラリ調整を自動化するための製品とサービスを提供しています。これにより、手間と時間のかかるNGSライブラリ調整を効率化し、一元化されたサポートを実現しています。
+マルチチャンネル自動分注機（96 / 384ヘッド）の精度は、0.3–250µLの範囲でCVが5%以下の高精度分注が可能です。
 
 </div>
 

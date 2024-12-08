@@ -91,7 +91,7 @@ class ZhipuAIChat(BaseModel):
                 temperature=0.1,
                 max_tokens=150
             )
-            # 根据实际返回的结构访问内容
+            # return the response
             return response.choices[0].message.content
         except AttributeError as e:
             print(f"Attribute Error in ZhipuAI: {e}")
