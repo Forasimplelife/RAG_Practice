@@ -221,7 +221,9 @@ class BaseModel:
 
 ## Reference
 
-| Name                                                         | Paper Link                                |
+<details><summary> <b>Expand</b> </summary>
+
+| Name                                                         | Link                                      |
 | ------------------------------------------------------------ | ----------------------------------------- |
 | Hand-on-RAG  | (https://github.com/SmartFlowAI/Hand-on-RAG)  |
 | When Large Language Models Meet Vector Databases: A Survey   | [paper](http://arxiv.org/abs/2402.01763)  |
