@@ -223,6 +223,7 @@ class BaseModel:
 
 | Name                                                         | Paper Link                                |
 | ------------------------------------------------------------ | ----------------------------------------- |
+| Hand-on-RAG  | (https://github.com/SmartFlowAI/Hand-on-RAG)  |
 | When Large Language Models Meet Vector Databases: A Survey   | [paper](http://arxiv.org/abs/2402.01763)  |
 | Retrieval-Augmented Generation for Large Language Models: A Survey | [paper](https://arxiv.org/abs/2312.10997) |
 | Learning to Filter Context for Retrieval-Augmented Generation | [paper](http://arxiv.org/abs/2311.08377)  |
